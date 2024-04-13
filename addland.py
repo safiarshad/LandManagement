@@ -1,0 +1,104 @@
+from tkinter import*
+from tkinter import ttk
+
+class Add_Land:
+    def __init__(self, root):
+        self.root=root
+        self.root.title("Land Management System")
+        self.root.geometry("1195x440+330+330")
+
+
+        #================TITLE=======================
+        lbl_title=Label(self.root, text="Add Land Details", font=("times new roman", 22,"bold"), bg="black", fg="gold", relief=RIDGE)
+        lbl_title.place(x=0, y = 0, width=1195, height=30)
+
+
+        #==============Label Frame===============
+        labelframeleft=LabelFrame(self.root, bd=2, relief=RIDGE, text="Land Details", font=("times new roman", 12, "bold"), padx=2)
+        labelframeleft.place(x=5, y=30, width=325, height=400)
+
+        #============Entries========
+        #Land ID
+        lbl_landId=Label(labelframeleft, text="Land ID:",font=("times new roman", 12), padx=2, pady=6)
+        lbl_landId.grid(row=0, column=0, sticky=W)
+
+        entry_id=ttk.Entry(labelframeleft, width=18,font=("times new roman", 12))
+        entry_id.grid(row=0, column=1)
+        #Owner info
+        lbl_owner_name = Label(labelframeleft, text="Owner Name:", font=("times new roman", 12), padx=2, pady=6)
+        lbl_owner_name.grid(row=1, column=0, sticky="w")
+        entry_owner_name = Entry(labelframeleft, width=20, font=("times new roman", 12))
+        entry_owner_name.grid(row=1, column=1)
+        #Location
+        lbl_location = Label(labelframeleft, text="Location:", font=("times new roman", 12), padx=2, pady=6)
+        lbl_location.grid(row=2, column=0, sticky="w")
+        # Assuming cities is a list of cities in Ghana
+        """cities = ["Accra", "Kumasi", "Takoradi", "Tamale", "Cape Coast", "Ho", "Sunyani", "Bolgatanga", "Wa"]
+        location_var = StringVar(value=cities[0])  # Set default value
+        option_menu_location = OptionMenu(labelframeleft, location_var, *cities)
+        option_menu_location.grid(row=2, column=1, sticky="ew")"""
+
+        combo_loc=ttk.Combobox(labelframeleft,font=("times new roman", 12), width=20, state="readonly")
+        combo_loc["value"]=("Accra", "Kumasi", "Takoradi", "Tamale", "Cape Coast", "Ho", "Sunyani", "Bolgatanga", "Wa")
+        combo_loc.current(0)
+        combo_loc.grid(row=2, column=1)
+        #Land Area
+        lbl_size_area = Label(labelframeleft, text="Size/Area:", font=("times new roman", 12), padx=2, pady=6)
+        lbl_size_area.grid(row=3, column=0, sticky="w")
+        entry_size_area = Entry(labelframeleft, width=14, font=("times new roman", 12))
+        entry_size_area.grid(row=3, column=1, sticky="w")
+        size_area_unit_var = StringVar(value="Acres")
+        option_menu_size_area_unit = OptionMenu(labelframeleft, size_area_unit_var, "Acres", "Square meters")
+        option_menu_size_area_unit.grid(row=3, column=1, sticky="e")
+        #Sales Price
+        lbl_sale_price = Label(labelframeleft, text="Sale Price:", font=("times new roman", 12), padx=2, pady=6)
+        lbl_sale_price.grid(row=4, column=0, sticky="w")
+        entry_sale_price = Entry(labelframeleft, width=20, font=("times new roman", 12))
+        entry_sale_price.grid(row=4, column=1)
+        #Purchase Price
+        lbl_purchase_price = Label(labelframeleft, text="Purchase Price:", font=("times new roman", 12), padx=2, pady=6)
+        lbl_purchase_price.grid(row=5, column=0, sticky="w")
+        entry_purchase_price = Entry(labelframeleft, width=20, font=("times new roman", 12))
+        entry_purchase_price.grid(row=5, column=1)
+        #Usage
+        lbl_usage = Label(labelframeleft, text="Usage:", font=("times new roman", 12), padx=2, pady=6)
+        lbl_usage.grid(row=6, column=0, sticky="w")
+        entry_usage = Entry(labelframeleft, width=20, font=("times new roman", 12))
+        entry_usage.grid(row=6, column=1)
+
+        #address
+        lbl_address = Label(labelframeleft, text="Address:", font=("times new roman", 12), padx=2, pady=6)
+        lbl_address.grid(row=7, column=0, sticky="w")
+        entry_address = Entry(labelframeleft, width=20, font=("times new roman", 12))
+        entry_address.grid(row=7, column=1)
+        #Notes
+        lbl_notes = Label(labelframeleft, text="Notes:", font=("times new roman", 12), padx=2, pady=6)
+        lbl_notes.grid(row=8, column=0, sticky="nw")
+        entry_notes = Text(labelframeleft, width=20, height=3, font=("times new roman", 12))
+        entry_notes.grid(row=8, column=1, sticky="nw")
+
+
+        save_button = Button(labelframeleft, text="Save Entry", font=("times new roman", 12), bg="black", fg="gold")
+        save_button.grid(row=9, column=0, padx=5, pady=5)
+
+
+        
+
+
+
+
+
+
+
+
+
+def main():
+    root=Tk()
+    obj=Add_Land(root)
+    root.mainloop()
+
+
+
+
+if __name__ == "__main__":
+    main()

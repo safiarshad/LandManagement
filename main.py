@@ -1,7 +1,7 @@
 from tkinter import*
 from PIL import Image,ImageTk #pip install pillow
 import os
-
+from addland import Add_Land
 
 current_directory = os.getcwd()
 img1_path = os.path.join(current_directory, "LMS.png")
@@ -46,12 +46,12 @@ class LandManagement:
 
         #=============MENU=======
         lbl_menu=Label(main_frame, text="MENU", font=("times new roman", 20,"bold"), bg="black", fg="gold", relief=RIDGE)
-        lbl_menu.place(x=0, y = 0, width=350)
+        lbl_menu.place(x=0, y = 0, width=330)
         #=======================Options Frame================
         btn_frame=Frame(main_frame, bd=4, relief=RIDGE)
-        btn_frame.place(x=0, y= 36, width=350, height=210)
+        btn_frame.place(x=0, y= 36, width=330, height=210)
 
-        Newland_btn=Button(btn_frame, text="Add Land", width=22, font=("times new roman", 20,"bold"), bg="black", fg="gold", bd=0)
+        Newland_btn=Button(btn_frame, text="Add Land",command=self.addLand_details ,width=22, font=("times new roman", 20,"bold"), bg="black", fg="gold", bd=0)
         Newland_btn.grid(row=0, column=0,pady=1)
 
         Search_btn = Button(btn_frame, text="Search", width=22, font=("times new roman", 20, "bold"), bg="black", fg="gold", bd=0)
@@ -63,6 +63,11 @@ class LandManagement:
 
         Exit_btn = Button(btn_frame, text="Exit", width=22, font=("times new roman", 20, "bold"), bg="black", fg="gold", bd=0)
         Exit_btn.grid(row=3, column=0, pady=1)
+
+    def addLand_details(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Add_Land(self.new_window)
+
 
 def main():
     root=Tk()
