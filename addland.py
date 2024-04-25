@@ -1,5 +1,6 @@
 from tkinter import*
-from tkinter import ttk
+from tkinter import Tk, ttk, Label, Entry, Frame, Button, OptionMenu, StringVar
+
 
 class Add_Land:
     def __init__(self, root):
@@ -80,6 +81,58 @@ class Add_Land:
 
         save_button = Button(labelframeleft, text="Save Entry", font=("times new roman", 12), bg="black", fg="gold")
         save_button.grid(row=9, column=0, padx=5, pady=5)
+
+
+
+        #============Table Frame===============
+        tableframe=LabelFrame(self.root, bd=2, relief=RIDGE, text="View Table", font=("times new roman", 12, "bold"), padx=2)
+        tableframe.place(x=335, y=30, width=860, height=400)
+
+        lbl_searchby=Label(tableframe, font=("times new roman", 12, "bold"), text="Search By:", bg="Blue", fg="white")
+        lbl_searchby.grid(row=0, column=0, sticky=W, padx=2)
+
+        search=ttk.Combobox(tableframe, font=("times new roman", 12, "bold"), width=24, state="readonly")
+        search["values"]=("Land ID", "Owner's Name", "Location", "price") 
+
+        search.current(0)
+        search.grid(row=0, column=1, padx=2)
+        text_search=ttk.Entry(tableframe, font=("times new roman", 12), width=24)
+        text_search.grid(row=0, column=2, padx=2)
+
+        search_button=Button(tableframe, text="Search", font=("times new roman", 11, "bold"), bg="black", fg="Gold", width=10)
+        search_button.grid(row=0, column=3,padx=1)
+
+        showall_button=Button(tableframe, text="Show All", font=("times new roman", 11, "bold") ,bg="black", fg="Gold", width=10)
+        showall_button.grid(row=0, column=4,padx=1)
+
+        #===========================DATA TABLE=================
+        data_tableframe=LabelFrame(tableframe, bd=2, relief=RIDGE, padx=2)
+        data_tableframe.place(x=0, y=50, width=860, height=325)
+
+        scroll_xaxis=ttk.Scrollbar(data_tableframe, orient=HORIZONTAL)
+        scroll_yaxis=ttk.Scrollbar(data_tableframe, orient=VERTICAL)
+
+        self.land_details_table=ttk.Treeview(data_tableframe, column=("Land ID", "Owner's Name","Sales Price", "Purchased Price",
+                                                                      "Location", "Land's Area" ), xscrollcommand=scroll_xaxis.set, yscrollcommand=scroll_yaxis.set)
+        
+        scroll_xaxis.pack(side=BOTTOM,fill=X)
+        scroll_yaxis.pack(side=RIGHT,fill=Y)
+
+        scroll_xaxis.config(command=self.land_details_table.xview)
+        scroll_yaxis.config(command=self.land_details_table.yview)
+
+        self.land_details_table.heading("Land ID", text="Land ID")
+        self.land_details_table.heading("Owner's Name", text="Owner's Name")
+        self.land_details_table.heading("Sales Price", text="Sales Price")
+        self.land_details_table.heading("Purchased Price", text="Purchased Price")
+        self.land_details_table.heading("Location", text="Location")
+        self.land_details_table.heading("Land's Area", text="Land's Area")
+
+
+        # Show the headings and pack the Treeview
+        self.land_details_table['show'] = 'headings'
+        self.land_details_table.pack(fill=BOTH, expand=1)
+
 
 
         
