@@ -61,18 +61,23 @@ class LandManagement:
         Delete_btn.grid(row=2, column=0, pady=1)
 
 
-        Exit_btn = Button(btn_frame, text="Exit", width=22, font=("times new roman", 20, "bold"), bg="black", fg="gold", bd=0)
+        Exit_btn = Button(btn_frame, text="Exit", width=22, command=self.stop_application,font=("times new roman", 20, "bold"), bg="black", fg="gold", bd=0)
         Exit_btn.grid(row=3, column=0, pady=1)
 
     def addLand_details(self):
         self.new_window=Toplevel(self.root)
         self.app=Add_Land(self.new_window)
+    def stop_application(self):
+        self.root.quit()
+    
 
 
 def main():
     root=Tk()
     obj=LandManagement(root)
     root.mainloop()
+
+    
 
 
 

@@ -114,29 +114,32 @@ class Add_Land:
         update_button.grid(row=9, column=1, padx=1, pady=1)
         delete_button = Button(button_frame, text="Delete",command=self.delete,font=("times new roman", 12), bg="black", fg="gold")
         delete_button.grid(row=9, column=2, padx=1, pady=1)
+        reset_button = Button(button_frame, text="Reset",command=self.reset,font=("times new roman", 12), bg="black", fg="gold")
+        reset_button.grid(row=9, column=3, padx=1, pady=1)
 
         
 
 
-        #============Table Frame===============
+        #============Table Frame Search System===============
         tableframe=LabelFrame(self.root, bd=2, relief=RIDGE, text="View Table", font=("times new roman", 12, "bold"), padx=2)
         tableframe.place(x=335, y=30, width=860, height=400)
 
         lbl_searchby=Label(tableframe, font=("times new roman", 12, "bold"), text="Search By:", bg="Blue", fg="white")
         lbl_searchby.grid(row=0, column=0, sticky=W, padx=2)
-
-        search=ttk.Combobox(tableframe, font=("times new roman", 12, "bold"), width=24, state="readonly")
+        self.var_search=StringVar()
+        search=ttk.Combobox(tableframe,textvariable=self.var_search, font=("times new roman", 12, "bold"), width=24, state="readonly")
         search["values"]=("Land ID", "Owner's Name", "Location", "price") 
 
         search.current(0)
         search.grid(row=0, column=1, padx=2)
-        text_search=ttk.Entry(tableframe, font=("times new roman", 12), width=24)
+        self.var_txtSearch=StringVar()
+        text_search=ttk.Entry(tableframe, textvariable=self.var_txtSearch,font=("times new roman", 12), width=24)
         text_search.grid(row=0, column=2, padx=2)
 
-        search_button=Button(tableframe, text="Search", font=("times new roman", 11, "bold"), bg="black", fg="Gold", width=10)
+        search_button=Button(tableframe, text="Search", command=self.search,font=("times new roman", 11, "bold"), bg="black", fg="Gold", width=10)
         search_button.grid(row=0, column=3,padx=1)
 
-        showall_button=Button(tableframe, text="Show All", font=("times new roman", 11, "bold") ,bg="black", fg="Gold", width=10)
+        showall_button=Button(tableframe, text="Show All", command=self.show_data,font=("times new roman", 11, "bold") ,bg="black", fg="Gold", width=10)
         showall_button.grid(row=0, column=4,padx=1)
 
         #===========================DATA TABLE=================
@@ -336,14 +339,13 @@ class Add_Land:
 
                 # SQL query to delete the record with the given Land ID
                 query = "DELETE FROM land_mangement WHERE `Land ID` = %s"
-                value = (self.var_landid.get(),)  # The Land ID to delete
+                value = (self.var_landid.get(),)  
 
-                my_cursor.execute(query, value)  # Execute the delete query
-                conn.commit()  # Commit changes
+                my_cursor.execute(query, value)  
+                conn.commit() 
 
                 # Refresh the TreeView after deletion
-                self.show_data()  # Call the show_data function to refresh the TreeView
-
+                self.show_data()  
                 messagebox.showinfo("Success", "Entry has been deleted successfully.", parent=self.root)
 
             except Exception as es:
@@ -356,6 +358,53 @@ class Add_Land:
         else:
             # If user cancels, do nothing
             messagebox.showinfo("Canceled", "Deletion has been canceled.", parent=self.root)
+
+
+    def reset(self):
+       
+        # Clear other fields
+        self.var_owner_name.set("")  # Clear the owner's name
+        self.var_sale_price.set("")  # Clear the sale price
+        self.var_purchased_price.set("")  # Clear the purchased price
+        self.var_land_area.set("")  # Clear the land area
+        self.size_area_unit_var.set("Acres")  # Reset the unit of area
+        self.var_location.set("")  # Clear the location
+        self.var_address.set("")  # Clear the address
+        self.var_usage.set("")  # Clear the usage
+        self.var_notes.set("")  # Clear the notes
+         # Generate a new random Land ID
+        
+        x = random.randint(1, 99999)  # Random ID from 1 to 99999
+        self.var_landid.set(str(x))  # Set the Land ID
+
+
+        # Reset any additional elements or UI components if needed
+        # For example, if you have a Combobox for location, you might reset its selection
+        #self.combo_loc.current(0)  # Set Combobox to the first value (default)
+
+    def search(self):
+        conn = mysql.connector.connect(
+                    host="localhost",
+                    username="root",
+                    password="safi",
+                    database="management"
+                )
+        my_cursor = conn.cursor()
+        column = self.var_search.get()  # Get the search column
+        search_text = self.var_txtSearch.get()  # Get the text to search for
+
+        query = f"SELECT * FROM land_mangement WHERE `{column}` LIKE %s"
+        search_value = (f"%{search_text}%",)  # Using a tuple for parameterized queries
+
+        my_cursor.execute(query, search_value)  # Execute the parameterized query
+        rows = my_cursor.fetchall() 
+        
+        if len (rows)!=0:
+            self.land_details_table.delete(*self.land_details_table.get_children())
+            for i in rows:
+                self.land_details_table.insert("",END,values=i)
+            conn.commit()
+        conn.close()
 
 
 
