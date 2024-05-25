@@ -2,6 +2,9 @@ from tkinter import*
 from PIL import Image,ImageTk #pip install pillow
 import os
 from addland import Add_Land
+from tkinter import messagebox
+from login import LoginApp
+import tkinter as tk
 
 current_directory = os.getcwd()
 img1_path = os.path.join(current_directory, "LMS.png")
@@ -69,14 +72,30 @@ class LandManagement:
         self.app=Add_Land(self.new_window)
     def stop_application(self):
         self.root.quit()
+
+
+        #====================TEST++===============================
+        
     
 
 
 def main():
-    root=Tk()
-    obj=LandManagement(root)
+    root = Tk()
+    
+    # Create an instance of LoginApp
+    login_app = LoginApp(root)
+
+    # Run the login window and wait until it is closed
     root.mainloop()
 
+    # If login is successful, create the main application window
+    if login_app.login_successful:
+        root = Tk()  # Create a new root window for the main application
+        obj = LandManagement(root)
+        root.mainloop()
+
+    
+   
     
 
 
