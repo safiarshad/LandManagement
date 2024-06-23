@@ -9,6 +9,7 @@ class LoginApp:
         self.root.geometry("400x400")
         
         self.login_successful = False
+        self.is_admin = False
 
         self.style = ttk.Style()
         self.style.configure("TLabel", font=("Arial", 12))
@@ -94,12 +95,15 @@ class LoginApp:
                     return
             self.create_account(username, password, account_type == "admin")
 
+        if self.login_successful:
+            self.is_admin = self.check_if_admin(username)
+            self.root.destroy()
+
     def login(self, username, password):
         cursor = self.conn.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
         result = cursor.fetchone()
         if result:
             self.login_successful = True
-            self.root.destroy()
         else:
             messagebox.showerror("Login", "Invalid username or password")
 
@@ -117,8 +121,11 @@ class LoginApp:
             else:
                 messagebox.showinfo("Create Account", "User account created successfully!")
             self.login_successful = True
-            self.root.destroy()
+
+    def check_if_admin(self, username):
+        cursor = self.conn.execute("SELECT is_admin FROM users WHERE username=?", (username,))
+        result = cursor.fetchone()
+        return result[0] if result else False
 
     def __del__(self):
         self.conn.close()
-
