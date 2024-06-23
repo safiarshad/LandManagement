@@ -43,7 +43,7 @@ class Add_Land:
 
         #==============Label Frame===============
         labelframeleft=LabelFrame(self.root, bd=2, relief=RIDGE, text="Land Details", font=("times new roman", 12, "bold"), padx=2)
-        labelframeleft.place(x=5, y=30, width=325, height=400)
+        labelframeleft.place(x=5, y=30, width=325, height=405)
 
         #============Entries========
         #Land ID
@@ -119,7 +119,7 @@ class Add_Land:
 
         #========================Button Frame=============================
         button_frame=LabelFrame(labelframeleft, bd=2, relief=RIDGE, padx=2)
-        button_frame.place(x=4, y=320, width=310, height=40)
+        button_frame.place(x=4, y=340, width=310, height=40)
         save_button = Button(button_frame, text="Save Entry", command=self.add_data,font=("times new roman", 12), bg="black", fg="gold")
         save_button.grid(row=9, column=0, padx=1, pady=1)
 
@@ -240,6 +240,8 @@ class Add_Land:
             # If no cities are available, clear the selection
             self.combo_city.set('')
 
+
+#====================ADD Data FUnction============
     def add_data(self):
         if self.var_owner_name.get()=="" or self.var_sale_price.get()=="":
             messagebox.showerror("Error", "Owner's Name or Sale's Price is not added!",parent=self.root)
@@ -260,7 +262,7 @@ class Add_Land:
                                         self.var_purchased_price.get(),
                                         self.var_land_area.get(),
                                         self.size_area_unit_var.get(),
-                                        self.var_location.get(),
+                                
                                         self.var_address.get(),
                                         self.var_usage.get(),
                                         self.var_notes.get()

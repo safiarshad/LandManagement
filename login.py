@@ -19,7 +19,7 @@ class LoginApp:
         self.option_label.pack(pady=5)
         self.option_var = tk.StringVar(value="login")
         self.option_menu = ttk.Combobox(root, textvariable=self.option_var, state="readonly")
-        self.option_menu['values'] = ("login", "create")
+        self.option_menu['values'] = ("login", "create account")
         self.option_menu.pack(pady=5)
         self.option_menu.bind("<<ComboboxSelected>>", self.update_form)
         
