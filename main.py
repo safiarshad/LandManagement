@@ -1,7 +1,7 @@
 from tkinter import *
 from PIL import Image, ImageTk  # pip install pillow
-import os
-import sys
+import os   #pip install os
+import sys #pip install sys
 import importlib
 from tkinter import messagebox
 from login import LoginApp
@@ -11,7 +11,6 @@ current_directory = os.getcwd()
 img1_path = os.path.join(current_directory, "LMS.png")
 logo_path = os.path.join(current_directory, "LOGO.jpg")
 icon_path = os.path.join(current_directory, "ICON.png")
-
 
 class LandManagement:
     def __init__(self, root, admin=False):
@@ -140,3 +139,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
